@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>PAYCHECK</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="/vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css" />
+    <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet" />
+
+    <!-- Custom styles for this template-->
+    <link href="/css/sb-admin-2.min.css" rel="stylesheet" />
+
+	<!-- datepicker -->
+	<link rel="stylesheet" href="/vendor/datepicker/datepicker.min.css">
+
+    <!-- handsontable -->
+    <link href="/handsontable/handsontable.full.min.css" rel="stylesheet" type="text/css" />
+	<script src="/handsontable/handsontable.full.js"></script>
+	<script src="/handsontable/languages/ko-KR.min.js"></script>
+
+	<style>
+		table.htCore tr.odd td {
+		    background-color: #d1d3e2 !important;
+		}
+
+		table.htCore tr.selected td {
+		    background-color: #3a3b45 !important;
+		    color: #fff !important;
+		}
+	</style>
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+            <!-- Sidebar - Brand -->
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/">
+                <div class="sidebar-brand-icon rotate-n-15">
+                    <i class="fas fa-laugh-wink"></i>
+                </div>
+                <div class="sidebar-brand-text mx-1">
+					PayCheck<sup>v1.0</sup>
+				</div>
+			</a>
+
+            <!-- Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+            <!-- Sidebar Toggler (Sidebar) -->
+            <div class="text-center d-none d-md-inline">
+                <button class="rounded-circle border-0" id="sidebarToggle"></button>
+            </div>
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+
+                    <!-- Sidebar Toggle (Topbar) -->
+                    <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3"><i class="fa fa-bars"></i></button>
+
+                    <!-- Topbar Search -->
+                    <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
+                        <div class="input-group">
+                            <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+							<div class="input-group-append">
+								<button class="btn btn-primary" type="button">
+									<i class="fas fa-search fa-sm"></i>
+								</button>
+							</div>
+						</div>
+                    </form>
+
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+
+                        <!-- Nav Item - Search Dropdown (Visible Only XS) -->
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+                            <!-- Dropdown - Messages -->
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in" aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                    </ul>
+
+                </nav>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">급여명세서</h1>
+                        <div>
+	                        <a href="#" id="btnSave" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
+	                        	<i class="fas fa-save fa-sm text-white-50"></i> 저장
+	                        </a>
+	                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
+	                        	<i class="fas fa-envelope fa-sm text-white-50"></i> 이메일
+	                        </a>
+                        </div>
+                    </div>
+<!-- https://datatables.net/extensions/keytable/<p>
+https://datatables.net/examples/api/add_row.html<p>
+file:///C:/Users/hwmk/Desktop/startbootstrap-sb-admin-2-gh-pages/startbootstrap-sb-admin-2-gh-pages/tables.html<p>
+https://fontawesome.com/v5/search?s=solid%2Cbrands<p>
+https://kutar37.tistory.com/entry/Grid-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%ACDatatables-%EC%82%AC%EC%9A%A9%EB%B2%95%EC%98%88%EC%A0%9C<p>
+<p><p>
+slickgrid  https://6pac.github.io/SlickGrid/examples/example-excel-compatible-spreadsheet.html
+handsontable   https://handsontable.com/docs/6.2.1/demo-copy-paste.html
+
+체크박스를 하려면 htCore가 아닌 일반 컬럼으로 추가해야 전체추가를 할 수 있음 (+다중 선택 후 스페이스 키로 멀티체크 할 수 있음)
+http://jsfiddle.net/handsoncode/9e4044cf/
+http://jsfiddle.net/handsoncode/1eg8dmsg/1/
+
+
+https://handsontable.com/demo
+https://handsontable.com/docs/examples
+https://qiita.com/t-iguchi/items/1fc8f70c8a056fda744b
+
+https://handsontable.com/docs/saving-data/#overview
+https://ichi.pro/ko/http-yocheong-bangbeob-get-post-put-patch-delete-javascriptui-fetch-apileul-sayonghan-yeonseub-250115341607584
+
+datepicker
+http://fengyuanchen.github.io/datepicker/
+https://github.com/fengyuanchen/datepicker#i18n
+-->
+					<!-- DataTable -->
+					<div class="card shadow mb-4">
+                        <div class="card-header py-3">
+                        	<div class="d-sm-flex align-items-center justify-content-between">
+	                        	<input data-toggle="datepicker" id="dateTemplate" >
+								<div>
+									<a href="#" id="btnAddRow" class="btn btn-warning btn-circle btn-sm"> <i class="fas fa-plus"></i></a>
+									<a href="#" id="btnDelRow" class="btn btn-danger btn-circle btn-sm"> <i class="fas fa-minus"></i></a>
+								</div>
+							</div>
+                        </div>
+                        <div class="card-body">
+							<!-- handsontable -->
+							<div class="table-responsive">
+						    	<div id="dataTable" class="row handsontable"></div>
+							</div>
+							<script>
+							var SELECTED_CLASS = 'selected';
+							var DEFAULT_ALIGNMENT_CLASS = 'htCenter';
+							var ODD_ROW_CLASS = 'odd';
+
+							  	  const data = [];
+
+									const container = document.getElementById('dataTable');
+									const hTable = new Handsontable(container, {
+										data,
+										language: 'ko-KR',
+										licenseKey: 'non-commercial-and-evaluation',
+										width: '100%',
+										height: 'auto',
+										rowHeights: 30,
+										className: "htMiddle htCenter",
+										rowHeaders: true,
+										colHeaders: ['companyName', 'userName', 'userEmail', 'birthDay', 'enterYmd', 'positionName',
+											'basicAmount','extendAmount','holidayAmount','bonusAmount','specialAmount','vehicleAmount','educationAmount','mealAmount','payTotalAmount',
+											'pensionAmount','healthAmount','careAmount','hireAmount','incomeTaxAmount','localTaxAmount','supportPensionAmount','supportHireAmount','deductionTotalAmount',
+											'realAmount'
+										],
+										columns: [
+											{ data: 'companyName', type: 'text' },
+											{ data: 'userName', type: 'text' },
+											{ data: 'userEmail', type: 'text' },
+											{ data: 'birthDay', type: 'date', correctFormat: true, dateFormat: 'YYYY-MM-DD', datePickerConfig: {
+										        i18n:{
+												    previousMonth : 'Previous Month',
+												    nextMonth     : 'Next Month',
+												    months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+												    weekdays      : ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+												    weekdaysShort : ['일', '월', '화', '수', '목', '금', '토'],
+												}
+										    }},
+											{ data: 'enterYmd', type: 'date', correctFormat: true, dateFormat: 'YYYY-MM-DD', datePickerConfig: {
+										        i18n:{
+												    previousMonth : 'Previous Month',
+												    nextMonth     : 'Next Month',
+												    months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+												    weekdays      : ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+												    weekdaysShort : ['일', '월', '화', '수', '목', '금', '토'],
+												}
+										    }},
+											{ data: 'positionName', type: 'text' },
+											{ data: 'basicAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'extendAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'holidayAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'bonusAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'specialAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'vehicleAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'educationAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'mealAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'payTotalAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'pensionAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'healthAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'careAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'hireAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'incomeTaxAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'localTaxAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'supportPensionAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'supportHireAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'deductionTotalAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+											{ data: 'realAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} }
+										  ],
+										fixedColumnsLeft: 2,
+										stretchH: 'all',
+										dropdownMenu: false,
+										hiddenColumns: {
+										  indicators: true,
+										},
+										contextMenu: true,
+										multiColumnSorting: true,
+										filters: false,
+										manualRowMove: true,
+										outsideClickDeselects: false,	//이걸 해줘야 삭제 버튼의 getSelectedLast를 사용 할 수 있다
+						            	beforeRenderer: function (TD, row, column, prop, value, cellProperties) {
+						            	  // Adding classes to `TR` just while rendering first visible `TD` element
+						            	  if (column !== 0) {
+						            	    return;
+						            	  }
+
+						            	  var parentElement = TD.parentElement;
+
+						            	  if (parentElement === null) {
+						            	    return;
+						            	  }
+
+						            	  // Add class to selected rows
+						            	  if (cellProperties.instance.getDataAtRowProp(row, '0')) {
+						            	    Handsontable.dom.addClass(parentElement, SELECTED_CLASS);
+						            	  } else {
+						            	    Handsontable.dom.removeClass(parentElement, SELECTED_CLASS);
+						            	  }
+
+						            	  // Add class to odd TRs
+						            	  if (row % 2 === 0) {
+						            		  Handsontable.dom.removeClass(parentElement, ODD_ROW_CLASS);
+						            	  } else {
+						            		  Handsontable.dom.addClass(parentElement, ODD_ROW_CLASS);
+						            	  }
+						            	},
+						            	afterPaste: (data, coords) => {
+						            		console.log('coords', coords);
+						            		console.log('afterPaste', data);
+						            	},
+						            	afterCreateRow: (index, amount, source) => {
+						            		const paycheckMonth = $("#dateTemplate").datepicker('getDate');
+						    				const year = paycheckMonth.getFullYear();
+						    				const month = paycheckMonth.getMonth() + 1;
+
+						    				hTable.setSourceDataAtCell(index, "paycheckMonth", `${year}${month >= 10 ? month : '0' + month}`);
+						            	},
+						            	afterRemoveRow: (index, amount, physicalRows, source) => {
+						            		console.log(index + '/' + amount + '/' + physicalRows);
+						            		console.log(source);
+						            	},
+						            	afterUndo: function(action) {
+						            		if (action.actionType == "remove_row") {
+						            			//행삭제 undo시???
+						            			console.log('hTable.removedData[action.index]', hTable.removedData[action.index]);
+						            		}
+						            	}
+									});
+
+									hTable.refreshDimensions();
+							  </script>
+                        </div>
+                    </div>
+행삭제 시 바로 저장????????<br>
+삭제한 row를 담는것 까진 좋았는데 undo 하고 나서 비워야 할 때를 모르겠다 ㅜㅜ<br>
+context메뉴에서 삭제 할 경우는??????????<br>
+                </div>
+                <!-- /.container-fluid -->
+
+            </div>
+            <!-- End of Main Content -->
+
+            <!-- Footer -->
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; glorial 2022</span>
+                    </div>
+                </div>
+            </footer>
+            <!-- End of Footer -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+    <!-- Scroll to Top Button-->
+    <a class="scroll-to-top rounded" href="#page-top">
+        <i class="fas fa-angle-up"></i>
+    </a>
+
+    <!-- Logout Modal-->
+    <div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">준비중입니다.</h5>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                    <a class="btn btn-primary" href="login.html">Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+	<!-- Bootstrap core JavaScript-->
+    <script src="/vendor/jquery/jquery.min.js"></script>
+    <script src="/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Core plugin JavaScript-->
+    <script src="/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+	<!-- datePicker -->
+	<script src="/vendor/datepicker/datepicker.min.js"></script>
+    <script src="/vendor/datepicker/datepicker.ko-KR.js"></script>
+
+    <!-- Custom scripts for all pages-->
+    <script src="/js/sb-admin-2.js"></script>
+	<script type="text/javascript">
+		$(function(){
+			$("#dateTemplate").datepicker({
+				format:'yyyy년 MM월',
+				language: 'ko-KR',
+				autoHide: true
+			}).on({'hide.datepicker': function (e) {
+				var oldValue = $(this).data('oldValue') || "";
+
+				// 값이 변경 되었을 경우만 조회
+				if (this.value !== oldValue) {
+		            $(this).data('oldValue', this.value);
+		            getPaychecks();
+		        }
+		    }});
+			$('[data-toggle="datepicker"]').datepicker();
+			$("#dateTemplate").datepicker('setDate', new Date());
+			getPaychecks();
+
+			$("#btnSave").click(function (event) {
+			    event.preventDefault();
+			    savePaychecks();
+			});
+
+			$("#btnAddRow").click(function (event) {
+			    event.preventDefault();
+
+			    var nRow = hTable.countRows();
+			    hTable.alter('insert_row', nRow, 1);
+			});
+
+			$("#btnDelRow").click(function (event) {
+			    event.preventDefault();
+
+			    const nRow = hTable.getSelectedLast()[0];
+			    const delRow = hTable.getSourceDataAtRow(nRow);
+
+			    //삭제한 row를 담는것 까진 좋았는데 undo 하고 나서 지워야 할 때를 모르겠다 ㅜㅜ
+			    //context메뉴에서 삭제 할 경우는??????????
+			    hTable.removedData = hTable.removedData || [];
+			    hTable.removedData[nRow] = delRow;
+
+			    hTable.alter('remove_row', nRow);
+			});
+		});
+
+		function getPaychecks(){
+			hTable.loadData([]);
+
+			const paycheckMonth = $("#dateTemplate").datepicker('getDate');
+			const year = paycheckMonth.getFullYear();
+			const month = paycheckMonth.getMonth() + 1;
+
+			fetch(`/api/paycheck/v1/paychecks/${year}${month >= 10 ? month : '0' + month}`)
+			.then(res => res.json())
+			.then(result => {
+				hTable.loadData(result.data);
+			})
+			.catch(err => {
+		        console.error('There was an error!', err);
+		    });
+		}
+
+		function savePaychecks(){
+			const data = { data: hTable.getSourceData() };
+			fetch('/api/paycheck/v1/batch-save', {
+				method: 'POST',
+				headers: {'content-type': 'application/json'},
+				body: JSON.stringify(data)
+			})
+			.then(res => res.json())
+			.then(result => {
+				alert('저장완료');
+				getPaychecks();
+			})
+			.catch(err => {
+		        console.error('There was an error!', err);
+		    });
+		}
+	</script>
+</body>
+</html>

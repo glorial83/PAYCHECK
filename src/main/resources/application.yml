@@ -1,0 +1,29 @@
+spring:
+  thymeleaf:
+    enabled: true
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+    encoding: UTF-8
+    view-names:    - thymeleaf/*
+  
+  datasource:    hikari:      driver-class-name: org.h2.Driver
+      jdbc-url: jdbc:h2:file:./paycheck #executable directory(=project root)
+      #jdbc-url: jdbc:h2:file:~/data/paycheck #user_home
+      username: paycheck
+      password: paycheck!
+  h2:
+    console:      enabled: true #http://localhost:8080/h2-console
+  jpa:    database-platform: org.hibernate.dialect.H2Dialect
+    #show-sql: true 이거 말고 로거(org.hibernate.SQL) 사용
+    open-in-view: false
+    hibernate:      ddl-auto: update
+    properties:      hibernate:
+        format_sql: true
+        #use_sql_comments: true
+
+logging:  level:
+    kr.glorial.paycheck: debug
+    org.springframework: debug
+    org.hibernate.SQL: debug
+    org.hibernate.type.descriptor.sql.BasicBinder: trace
