@@ -123,6 +123,9 @@
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">급여명세서</h1>
                         <div>
+	                        <a href="#" id="btnSearch" class="d-none d-sm-inline-block btn btn-sm btn-info shadow-sm">
+	                        	<i class="fas fa-save fa-sm text-white-50"></i> 조회
+	                        </a>
 	                        <a href="#" id="btnSave" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
 	                        	<i class="fas fa-save fa-sm text-white-50"></i> 저장
 	                        </a>
@@ -247,6 +250,15 @@ https://github.com/fengyuanchen/datepicker#i18n
 										multiColumnSorting: true,
 										filters: false,
 										manualRowMove: true,
+										cells: (row, col) => {
+										    const cellPrp = {};
+
+										    if (col === 1) {
+										      cellPrp.renderer = myBtns;
+										    }
+
+										    return cellPrp
+										},
 										outsideClickDeselects: false,	//이걸 해줘야 삭제 버튼의 getSelectedLast를 사용 할 수 있다
 						            	beforeRenderer: function (TD, row, column, prop, value, cellProperties) {
 						            	  // Adding classes to `TR` just while rendering first visible `TD` element
@@ -284,6 +296,7 @@ https://github.com/fengyuanchen/datepicker#i18n
 						    				const month = paycheckMonth.getMonth() + 1;
 
 						    				hTable.setSourceDataAtCell(index, "paycheckMonth", `${year}${month >= 10 ? month : '0' + month}`);
+						    				hTable.setSourceDataAtCell(index, "userName", "");
 						            	},
 						            	afterRemoveRow: (index, amount, physicalRows, source) => {
 						            		console.log(index + '/' + amount + '/' + physicalRows);
@@ -298,6 +311,24 @@ https://github.com/fengyuanchen/datepicker#i18n
 									});
 
 									hTable.refreshDimensions();
+
+
+
+
+									function myBtns(instance, td, row, col, prop, value, cellProperties) {
+									  Handsontable.renderers.TextRenderer.apply(this, arguments);
+									  td.innerHTML = `<div onclick='preview(${row})'><u>${value}</u></button>`;
+									}
+
+									function preview(nRow) {
+										var paycheckMonth = hTable.getDataAtRowProp(nRow, "paycheckMonth");
+										var paycheckId = hTable.getDataAtRowProp(nRow, "paycheckId");
+
+										if (!paycheckId) return;
+
+										$('#previewModal').modal();
+
+									}
 							  </script>
                         </div>
                     </div>
@@ -308,7 +339,25 @@ context메뉴에서 삭제 할 경우는??????????<br>
                 <!-- /.container-fluid -->
 
             </div>
-            <!-- End of Main Content -->
+
+			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
+
+			<div class="modal fade bd-example-modal-lg" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-lg">
+					<div class="modal-content">
+						<div class="modal-header">
+							<h4 class="modal-title" id="myLargeModalLabel">미리보기</h4>
+							<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+								<span aria-hidden="true">×</span>
+							</button>
+						</div>
+						<div class="modal-body">
+
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- End of Main Content -->
 
             <!-- Footer -->
             <footer class="sticky-footer bg-white">
@@ -381,6 +430,11 @@ context메뉴에서 삭제 할 경우는??????????<br>
 			$('[data-toggle="datepicker"]').datepicker();
 			$("#dateTemplate").datepicker('setDate', new Date());
 			getPaychecks();
+
+			$("#btnSearch").click(function (event) {
+			    event.preventDefault();
+			    getPaychecks();
+			});
 
 			$("#btnSave").click(function (event) {
 			    event.preventDefault();
