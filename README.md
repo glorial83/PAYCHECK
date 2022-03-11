@@ -1,4 +1,5 @@
 # PAYCHECK
+급여영수증
 
 ### Spec
 
@@ -10,3 +11,6 @@
 
 * [SB Admin 2](https://startbootstrap.com/theme/sb-admin-2)
 * pdf, excel
+=======
+급여영수증
+>>>>>>> 2b1e07ad5672fe36add106fa9c36a388e3a89bff
