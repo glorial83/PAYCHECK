@@ -317,7 +317,7 @@ https://github.com/fengyuanchen/datepicker#i18n
 
 									function myBtns(instance, td, row, col, prop, value, cellProperties) {
 									  Handsontable.renderers.TextRenderer.apply(this, arguments);
-									  td.innerHTML = `<div onclick='preview(${row})'><u>${value}</u></button>`;
+									  td.innerHTML = `<div data-paycheckName='${value}' onclick='preview(${row})'><u>${value}</u></button>`;
 									}
 
 									function preview(nRow) {
@@ -327,7 +327,6 @@ https://github.com/fengyuanchen/datepicker#i18n
 										if (!paycheckId) return;
 
 										$('#previewModal').modal();
-
 									}
 							  </script>
                         </div>
@@ -340,10 +339,8 @@ context메뉴에서 삭제 할 경우는??????????<br>
 
             </div>
 
-			<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Large modal</button>
-
 			<div class="modal fade bd-example-modal-lg" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg">
+				<div class="modal-dialog modal-lg modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h4 class="modal-title" id="myLargeModalLabel">미리보기</h4>
@@ -460,6 +457,17 @@ context메뉴에서 삭제 할 경우는??????????<br>
 			    hTable.removedData[nRow] = delRow;
 
 			    hTable.alter('remove_row', nRow);
+			});
+
+			$('#previewModal').on('shown.bs.modal', function (event) {
+				//var modal = $(this);
+				//modal.find('.modal-title').text('New message to ' + recipient);
+				//modal.find('.modal-body input').val(recipient);
+				var nRow = hTable.getSelectedLast()[0];
+				var paycheckMonth = hTable.getDataAtRowProp(nRow, "paycheckMonth");
+				var paycheckId = hTable.getDataAtRowProp(nRow, "paycheckId");
+
+				//pdf 미리보기 조회
 			});
 		});
 
