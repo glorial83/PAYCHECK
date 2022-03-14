@@ -349,7 +349,7 @@ context메뉴에서 삭제 할 경우는??????????<br>
 							</button>
 						</div>
 						<div class="modal-body">
-
+							<object id="pdfObject" data="" type="application/pdf" width="100%" height="700px"></object>
 						</div>
 					</div>
 				</div>
@@ -468,6 +468,7 @@ context메뉴에서 삭제 할 경우는??????????<br>
 				var paycheckId = hTable.getDataAtRowProp(nRow, "paycheckId");
 
 				//pdf 미리보기 조회
+				$('#pdfObject').attr('data',`/api/paycheck/v1/paychecks/${paycheckMonth}/${paycheckId}`);
 			});
 		});
 

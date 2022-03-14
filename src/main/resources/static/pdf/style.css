@@ -1,0 +1,36 @@
+.headercontent {
+   	size : 11pt;
+   	border : 1;
+   	padding : 10px;
+}
+
+.titlecontent {
+   	size : 30pt;
+   	padding : 10px;
+   	align : center;
+}
+
+.subtitlecontent {
+   	size : 10pt;
+   	align : center;
+}
+
+.maincontent {
+   	size : 10pt;
+   	padding : 8px 1px 8px 1px;
+}
+
+.datecontent {
+   	size : 10pt;
+   	align : center;
+}
+
+.companycontent {
+   	size : 10pt;
+   	padding : 5px 0px 5px 0px;
+}
+
+.itemcontent {
+   	size : 10pt;
+   	padding : 8px 1px 8px 1px;
+}
