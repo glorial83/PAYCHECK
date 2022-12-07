@@ -5,19 +5,168 @@
 <title></title>
 </head>
 <body>
-	<table class='titlecontent'>
+	<table>
 		<tr>
-			<td>급여명세서</td>
-		</tr>
-	</table>
-	<table class='headercontent'>
-		<tr>
+			<td width="70%%">
+				<!-- 제목 & 날짜 -->
+				<table class="titlecontent">
+					<tr>
+						<td>급 여 지 급 명 세 서</td>
+					</tr>
+				</table>
+				<br>
+				<table class="datecontent">
+					<tr>
+						<td>${paycheckMonth}</td>
+					</tr>
+				</table>
+			</td>
 			<td>
-				(주)테이크은(는) 공정거래를 자율적으로 실천합니다. 고객사들도 동참하여 공정하고 자유로운 시장 경쟁의 유지,
-				<br />
-				촉진을 위해 공정거래 질서를 준수할 수 있도록 다함께 노력합시다.
+				<!-- 사원정보 -->
+				<table class='headercontent'>
+					<tr>
+						<td width="30%%">소&nbsp;&nbsp;&nbsp;속</td>
+						<td style="text-align : right;">(주)테이크</td>
+					</tr>
+					<tr>
+						<td>성&nbsp;&nbsp;&nbsp;명</td>
+						<td style="text-align : right;">${userName}</td>
+					</tr>
+					<tr>
+						<td>입사일</td>
+						<td style="text-align : right;">${enterYmd}</td>
+					</tr>
+					<tr>
+						<td>직&nbsp;&nbsp;&nbsp;위</td>
+						<td style="text-align : right;">${positionName}</td>
+					</tr>
+				</table>
 			</td>
 		</tr>
 	</table>
+	<br><br><br>
+
+	<!-- 1. 실지급액 -->
+	<div class="subtitlecontent">1. 실 지급액</div>
+	<table class="payheader">
+		<tr>
+			<th style="background-color: #bbdefb;">지급합계</th>
+			<th style="background-color: #bbdefb;">공제합계</th>
+			<th style="background-color: #bbdefb;">실수령액</th>
+		</tr>
+		<tr>
+			<td style="text-align : right;">${payTotalAmount}</td>
+			<td style="text-align : right;">${deductionTotalAmount}</td>
+			<td style="text-align : right;">${realAmount}</td>
+		</tr>
+	</table>
+	<br><br>
+
+	<!-- 2. 지급내역 -->
+	<div class="subtitlecontent" style="padding-bottom: 0;">2. 지급내역</div>
+	<table class="payitem">
+		<tr >
+			<td width="20%%" style="border:0px;"></td>
+			<td width="30%%" style="border:0px;"></td>
+			<td width="20%%" style="border:0px;"></td>
+			<td width="30%%" style="border:0px;"></td>
+		</tr>
+		<tr>
+			<th style="background-color: #bbdefb;" colspan="2">지급항목</th>
+			<th style="background-color: #bbdefb;" colspan="2">공제항목</th>
+		</tr>
+		<tr>
+			<td>기본급여</td>
+			<td class="payitemamt">${basicAmount}</td>
+			<td>국민연금</td>
+			<td class="payitemamt">${pensionAmount}</td>
+		</tr>
+		<tr>
+			<td>포괄연장수당</td>
+			<td class="payitemamt">${extendAmount}</td>
+			<td>건강보험</td>
+			<td class="payitemamt">${healthAmount}</td>
+		</tr>
+		<tr>
+			<td>포괄휴일수당</td>
+			<td class="payitemamt">${holidayAmount}</td>
+			<td>장기요양보험</td>
+			<td class="payitemamt">${careAmount}</td>
+		</tr>
+		<tr>
+			<td>상 여 금</td>
+			<td class="payitemamt">${bonusAmount}</td>
+			<td>고용보험</td>
+			<td class="payitemamt">${hireAmount}</td>
+		</tr>
+		<tr>
+			<td>특별수당</td>
+			<td class="payitemamt">${specialAmount}</td>
+			<td>소득세</td>
+			<td class="payitemamt">${incomeTaxAmount}</td>
+		</tr>
+		<tr>
+			<td>차량유지</td>
+			<td class="payitemamt">${vehicleAmount}</td>
+			<td>지방소득세</td>
+			<td class="payitemamt">${localTaxAmount}</td>
+		</tr>
+		<tr>
+			<td>교육지원</td>
+			<td class="payitemamt">${educationAmount}</td>
+			<td>두루누리연금(40％)</td>
+			<td class="payitemamt">${supportPensionAmount}</td>
+		</tr>
+		<tr>
+			<td>식      대</td>
+			<td class="payitemamt">${mealAmount}</td>
+			<td>두루누리고용(40％)</td>
+			<td class="payitemamt">${supportHireAmount}</td>
+		</tr>
+		<tr>
+			<td> </td>
+			<td class="payitemamt"></td>
+			<td>연말정산소득세</td>
+			<td class="payitemamt">${yearEndIncomeTaxAmount}</td>
+		</tr>
+		<tr>
+			<td> </td>
+			<td class="payitemamt"></td>
+			<td>연말정산지방소득세</td>
+			<td class="payitemamt">${yearEndLocalTaxAmount}</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td class="payitemamt"> </td>
+			<td> </td>
+			<td class="payitemamt"> </td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td class="payitemamt"> </td>
+			<td> </td>
+			<td class="payitemamt"> </td>
+		</tr>
+	</table>
+	<table class="payitem">
+		<tr>
+			<td style="background-color: #bbdefb;" width="20%%">지급항목 합계</td>
+			<td style="background-color: #bbdefb;" width="30%%" class="payitemamt">${payTotalAmount}</td>
+			<td style="background-color: #bbdefb;" width="20%%">공제항목 합계</td>
+			<td style="background-color: #bbdefb;" width="30%%" class="payitemamt">${deductionTotalAmount}</td>
+		</tr>
+	</table>
+
+	<!-- footer -->
+	<br><br>
+	<div class='footercontent1'>
+		노고에 대단히 감사드립니다.
+	</div>
+	<div class='footercontent2'>
+		${issueDate}
+	</div>
+	<div class='footercontent3'>
+		(주)테이크
+	</div>
 </body>
 </html>

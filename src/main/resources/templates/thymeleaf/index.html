@@ -129,9 +129,12 @@
 	                        <a href="#" id="btnSave" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">
 	                        	<i class="fas fa-save fa-sm text-white-50"></i> 저장
 	                        </a>
-	                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
+	                        <a href="#" id="btnEmail" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
 	                        	<i class="fas fa-envelope fa-sm text-white-50"></i> 이메일
 	                        </a>
+                            <a href="#" id="btnSend" class="d-none d-sm-inline-block btn btn-sm btn-success shadow-sm">
+                                <i class="fas fa-envelope fa-sm text-white-50"></i> 전체이메일
+                            </a>
                         </div>
                     </div>
 <!-- https://datatables.net/extensions/keytable/<p>
@@ -176,171 +179,180 @@ https://github.com/fengyuanchen/datepicker#i18n
 						    	<div id="dataTable" class="row handsontable"></div>
 							</div>
 							<script>
-							var SELECTED_CLASS = 'selected';
-							var DEFAULT_ALIGNMENT_CLASS = 'htCenter';
-							var ODD_ROW_CLASS = 'odd';
+                                const SELECTED_CLASS = 'selected';
+                                const DEFAULT_ALIGNMENT_CLASS = 'htCenter';
+                                const ODD_ROW_CLASS = 'odd';
 
-							  	  const data = [];
+                                const data = [];
 
-									const container = document.getElementById('dataTable');
-									const hTable = new Handsontable(container, {
-										data,
-										language: 'ko-KR',
-										licenseKey: 'non-commercial-and-evaluation',
-										width: '100%',
-										height: 'auto',
-										rowHeights: 30,
-										className: "htMiddle htCenter",
-										rowHeaders: true,
-										colHeaders: ['companyName', 'userName', 'userEmail', 'birthDay', 'enterYmd', 'positionName',
-											'basicAmount','extendAmount','holidayAmount','bonusAmount','specialAmount','vehicleAmount','educationAmount','mealAmount','payTotalAmount',
-											'pensionAmount','healthAmount','careAmount','hireAmount','incomeTaxAmount','localTaxAmount','supportPensionAmount','supportHireAmount','deductionTotalAmount',
-											'realAmount'
-										],
-										columns: [
-											{ data: 'companyName', type: 'text' },
-											{ data: 'userName', type: 'text' },
-											{ data: 'userEmail', type: 'text' },
-											{ data: 'birthDay', type: 'date', correctFormat: true, dateFormat: 'YYYY-MM-DD', datePickerConfig: {
-										        i18n:{
-												    previousMonth : 'Previous Month',
-												    nextMonth     : 'Next Month',
-												    months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-												    weekdays      : ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-												    weekdaysShort : ['일', '월', '화', '수', '목', '금', '토'],
-												}
-										    }},
-											{ data: 'enterYmd', type: 'date', correctFormat: true, dateFormat: 'YYYY-MM-DD', datePickerConfig: {
-										        i18n:{
-												    previousMonth : 'Previous Month',
-												    nextMonth     : 'Next Month',
-												    months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
-												    weekdays      : ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
-												    weekdaysShort : ['일', '월', '화', '수', '목', '금', '토'],
-												}
-										    }},
-											{ data: 'positionName', type: 'text' },
-											{ data: 'basicAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'extendAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'holidayAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'bonusAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'specialAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'vehicleAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'educationAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'mealAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'payTotalAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'pensionAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'healthAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'careAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'hireAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'incomeTaxAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'localTaxAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'supportPensionAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'supportHireAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'deductionTotalAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
-											{ data: 'realAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} }
-										  ],
-										fixedColumnsLeft: 2,
-										stretchH: 'all',
-										dropdownMenu: false,
-										hiddenColumns: {
-										  indicators: true,
-										},
-										contextMenu: true,
-										multiColumnSorting: true,
-										filters: false,
-										manualRowMove: true,
-										cells: (row, col) => {
-										    const cellPrp = {};
+                                const container = document.getElementById('dataTable');
+                                const hTable = new Handsontable(container, {
+                                    data,
+                                    language: 'ko-KR',
+                                    licenseKey: 'non-commercial-and-evaluation',
+                                    width: '100%',
+                                    height: 'auto',
+                                    rowHeights: 30,
+                                    className: "htMiddle htCenter",
+                                    colHeaders: true,
+                                    rowHeaders: true,
+                                    nestedHeaders:[
+                                        [{ label: '인적사항', colspan: 6 }, { label: '지급내역', colspan: 9 }, { label: '공제내역', colspan: 11 }, ''],
+                                        [
+                                            '사번', '입사일', '직급', '성명', '이메일', '생일',
+                                            '기본급', '식대', '차량유지', '포괄연장수당', '포괄휴일수당', '육아수당', '체제비', '성과급', '지급합계',
+                                            '건강보험', '국민연금', '장기요양보험', '고용보험', '소득세', '지방소득세', '두루누리<br>연금(40%)', '두루누리<br>고용(40%)', '중도정산<br>소득세', '중도정산<br>지방소득세', '공제합계',
+                                            '실수령액'
+                                        ]
+                                    ],
+                                    columns: [
+                                        //인적사항
+                                        { data: 'userNo', type: 'text' },
+                                        { data: 'enterYmd', type: 'date', correctFormat: true, dateFormat: 'YYYY-MM-DD', datePickerConfig: {
+                                            i18n:{
+                                                previousMonth : 'Previous Month',
+                                                nextMonth     : 'Next Month',
+                                                months: ['1월', '2월', '3월', '4월', '5월', '6월', '7월', '8월', '9월', '10월', '11월', '12월'],
+                                                weekdays      : ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+                                                weekdaysShort : ['일', '월', '화', '수', '목', '금', '토'],
+                                            }
+                                        }},
+                                        { data: 'positionName', type: 'text' },
+                                        { data: 'userName', type: 'text' },
+                                        { data: 'userEmail', type: 'text' },
+                                        { data: 'birthDay', type: 'text' },
 
-										    if (col === 1) {
-										      cellPrp.renderer = myBtns;
-										    }
+                                        //지급
+                                        { data: 'basicAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'mealAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'vehicleAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'extendAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'holidayAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'childAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'specialAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'bonusAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'payTotalAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
 
-										    return cellPrp
-										},
-										outsideClickDeselects: false,	//이걸 해줘야 삭제 버튼의 getSelectedLast를 사용 할 수 있다
-						            	beforeRenderer: function (TD, row, column, prop, value, cellProperties) {
-						            	  // Adding classes to `TR` just while rendering first visible `TD` element
-						            	  if (column !== 0) {
-						            	    return;
-						            	  }
+                                        //공제
+                                        //'건강보험', '국민연금', '장기요양보험', '고용보험', '소득세', '지방소득세', '두루주리연금(40%)', '두루누리고용(40%)', '중도정산소득세', '중도정산지방소득세', '공제합계'
+                                        { data: 'healthAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'pensionAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'careAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'hireAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'incomeTaxAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'localTaxAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                        { data: 'supportPensionAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'}},
+                                        { data: 'supportHireAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'}},
+                                        { data: 'yearEndIncomeTaxAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'}},
+                                        { data: 'yearEndLocalTaxAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'}},
+                                        { data: 'deductionTotalAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
 
-						            	  var parentElement = TD.parentElement;
+                                        { data: 'realAmount', className: 'htRight', type: 'numeric', numericFormat: {pattern: '0,0', culture: 'ko-KR'} },
+                                      ],
+                                    fixedColumnsLeft: 4,
+                                    stretchH: 'all',
+                                    dropdownMenu: false,
+                                    hiddenColumns: {
+                                      indicators: true,
+                                    },
+                                    contextMenu: true,
+                                    multiColumnSorting: false,
+                                    filters: false,
+                                    manualRowMove: true,
+                                    cells: (row, col) => {
+                                        const cellPrp = {};
 
-						            	  if (parentElement === null) {
-						            	    return;
-						            	  }
+                                        if (col === 3) {
+                                          cellPrp.renderer = myBtns;
+                                        }
 
-						            	  // Add class to selected rows
-						            	  if (cellProperties.instance.getDataAtRowProp(row, '0')) {
-						            	    Handsontable.dom.addClass(parentElement, SELECTED_CLASS);
-						            	  } else {
-						            	    Handsontable.dom.removeClass(parentElement, SELECTED_CLASS);
-						            	  }
+                                        return cellPrp
+                                    },
+                                    outsideClickDeselects: false,	//이걸 해줘야 삭제 버튼의 getSelectedLast를 사용 할 수 있다
+                                    beforeRenderer: function (TD, row, column, prop, value, cellProperties) {
+                                      // Adding classes to `TR` just while rendering first visible `TD` element
+                                      if (column !== 0) {
+                                        return;
+                                      }
 
-						            	  // Add class to odd TRs
-						            	  if (row % 2 === 0) {
-						            		  Handsontable.dom.removeClass(parentElement, ODD_ROW_CLASS);
-						            	  } else {
-						            		  Handsontable.dom.addClass(parentElement, ODD_ROW_CLASS);
-						            	  }
-						            	},
-						            	afterPaste: (data, coords) => {
-						            		console.log('coords', coords);
-						            		console.log('afterPaste', data);
-						            	},
-						            	afterCreateRow: (index, amount, source) => {
-						            		const paycheckMonth = $("#dateTemplate").datepicker('getDate');
-						    				const year = paycheckMonth.getFullYear();
-						    				const month = paycheckMonth.getMonth() + 1;
+                                      var parentElement = TD.parentElement;
+                                      if (parentElement === null) {
+                                        return;
+                                      }
 
-						    				hTable.setSourceDataAtCell(index, "paycheckMonth", `${year}${month >= 10 ? month : '0' + month}`);
-						    				hTable.setSourceDataAtCell(index, "userName", "");
-						            	},
-						            	afterRemoveRow: (index, amount, physicalRows, source) => {
-						            		console.log(index + '/' + amount + '/' + physicalRows);
-						            		console.log(source);
-						            	},
-						            	afterUndo: function(action) {
-						            		if (action.actionType == "remove_row") {
-						            			//행삭제 undo시???
-						            			console.log('hTable.removedData[action.index]', hTable.removedData[action.index]);
-						            		}
-						            	}
-									});
+                                      // Add class to selected rows
+                                      if (cellProperties.instance.getDataAtRowProp(row, '0')) {
+                                        Handsontable.dom.addClass(parentElement, SELECTED_CLASS);
+                                      } else {
+                                        Handsontable.dom.removeClass(parentElement, SELECTED_CLASS);
+                                      }
 
-									hTable.refreshDimensions();
+                                      // Add class to odd TRs
+                                      if (row % 2 === 0) {
+                                          Handsontable.dom.removeClass(parentElement, ODD_ROW_CLASS);
+                                      } else {
+                                          Handsontable.dom.addClass(parentElement, ODD_ROW_CLASS);
+                                      }
+                                    },
+                                    afterPaste: (data, coords) => {
+                                        console.log('coords', coords);
+                                        console.log('afterPaste', data);
+                                    },
+                                    afterCreateRow: (index, amount, source) => {
+                                        const paycheckMonth = $("#dateTemplate").datepicker('getDate');
+                                        const year = paycheckMonth.getFullYear();
+                                        const month = paycheckMonth.getMonth() + 1;
 
+                                        hTable.setSourceDataAtCell(index, "paycheckMonth", `${year}${month >= 10 ? month : '0' + month}`);
+                                        hTable.setSourceDataAtCell(index, "userName", "");
+                                    },
+                                    beforeRemoveRow: (index, amount, physicalRows, source) => {
+                                        console.log(index + '/' + amount + '/' + physicalRows);
+                                        console.log(hTable.getSourceDataAtRow(physicalRows));
+                                    },
+                                    afterRemoveRow: (index, amount, physicalRows, source) => {
+                                        // console.log(index + '/' + amount + '/' + physicalRows);
+                                        // console.log(source);
+                                    },
+                                    afterUndo: function(action) {
+                                        if (action.actionType === "remove_row") {
+                                            //행삭제 undo시???
+                                            console.log('hTable.removedData[action.index]', hTable.removedData[action.index]);
+                                        }
+                                    }
+                                });
 
+                                hTable.refreshDimensions();
 
+                                function myBtns(instance, td, row, col, prop, value, cellProperties) {
+                                  Handsontable.renderers.TextRenderer.apply(this, arguments);
+                                  td.innerHTML = `<div data-paycheckName='${value}' onclick='preview(${row})'><u>${value}</u></button>`;
+                                }
 
-									function myBtns(instance, td, row, col, prop, value, cellProperties) {
-									  Handsontable.renderers.TextRenderer.apply(this, arguments);
-									  td.innerHTML = `<div data-paycheckName='${value}' onclick='preview(${row})'><u>${value}</u></button>`;
-									}
+                                function preview(nRow) {
+                                    const paycheckMonth = hTable.getDataAtRowProp(nRow, "paycheckMonth");
+                                    const paycheckId = hTable.getDataAtRowProp(nRow, "paycheckId");
 
-									function preview(nRow) {
-										var paycheckMonth = hTable.getDataAtRowProp(nRow, "paycheckMonth");
-										var paycheckId = hTable.getDataAtRowProp(nRow, "paycheckId");
+                                    if (!paycheckId) return;
 
-										if (!paycheckId) return;
-
-										$('#previewModal').modal();
-									}
+                                    $('#previewModal').modal();
+                                }
 							  </script>
                         </div>
                     </div>
-행삭제 시 바로 저장????????<br>
-삭제한 row를 담는것 까진 좋았는데 undo 하고 나서 비워야 할 때를 모르겠다 ㅜㅜ<br>
-context메뉴에서 삭제 할 경우는??????????<br>
+                    <!--
+                        행삭제 시 바로 저장????????<br>
+                        삭제한 row를 담는것 까진 좋았는데 undo 하고 나서 비워야 할 때를 모르겠다 ㅜㅜ<br>
+                        context메뉴에서 삭제 할 경우는??????????<br>
+                        22.12.06 정해원 저장 시 전부 delete 후 전부 insert
+                    -->
                 </div>
                 <!-- /.container-fluid -->
 
             </div>
 
-			<div class="modal fade bd-example-modal-lg" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-				<div class="modal-dialog modal-lg modal-dialog-centered">
+			<div class="modal fade bd-example-modal-xl" id="previewModal" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+				<div class="modal-dialog modal-xl modal-dialog-centered">
 					<div class="modal-content">
 						<div class="modal-header">
 							<h4 class="modal-title" id="myLargeModalLabel">미리보기</h4>
@@ -438,6 +450,41 @@ context메뉴에서 삭제 할 경우는??????????<br>
 			    savePaychecks();
 			});
 
+            $("#btnEmail").click(function (event) {
+                event.preventDefault();
+
+                const nRow = hTable.getSelectedLast()[0];
+                const paycheckMonth = hTable.getDataAtRowProp(nRow, "paycheckMonth");
+                const paycheckId = hTable.getDataAtRowProp(nRow, "paycheckId");
+
+                if (!paycheckId) return;
+
+                fetch(`/api/paycheck/v1/email/${paycheckMonth}/${paycheckId}`)
+                    .then(res => res.json())
+                    .then(result => {
+                        alert('송부완료');
+                    })
+                    .catch(err => {
+                        console.error('There was an error!', err);
+                    });
+            });
+
+            $("#btnSend").click(function (event) {
+                event.preventDefault();
+
+                const nRow = 0;
+                const paycheckMonth = hTable.getDataAtRowProp(nRow, "paycheckMonth");
+
+                fetch(`/api/paycheck/v1/email/${paycheckMonth}`)
+                    .then(res => res.json())
+                    .then(result => {
+                        alert('송부완료');
+                    })
+                    .catch(err => {
+                        console.error('There was an error!', err);
+                    });
+            });
+
 			$("#btnAddRow").click(function (event) {
 			    event.preventDefault();
 
@@ -463,11 +510,11 @@ context메뉴에서 삭제 할 경우는??????????<br>
 				//var modal = $(this);
 				//modal.find('.modal-title').text('New message to ' + recipient);
 				//modal.find('.modal-body input').val(recipient);
-				var nRow = hTable.getSelectedLast()[0];
-				var paycheckMonth = hTable.getDataAtRowProp(nRow, "paycheckMonth");
-				var paycheckId = hTable.getDataAtRowProp(nRow, "paycheckId");
+                const nRow = hTable.getSelectedLast()[0];
+                const paycheckMonth = hTable.getDataAtRowProp(nRow, "paycheckMonth");
+                const paycheckId = hTable.getDataAtRowProp(nRow, "paycheckId");
 
-				//pdf 미리보기 조회
+                //pdf 미리보기 조회
 				$('#pdfObject').attr('data',`/api/paycheck/v1/paychecks/${paycheckMonth}/${paycheckId}`);
 			});
 		});
@@ -490,8 +537,12 @@ context메뉴에서 삭제 할 경우는??????????<br>
 		}
 
 		function savePaychecks(){
+            const paycheckMonth = $("#dateTemplate").datepicker('getDate');
+            const year = paycheckMonth.getFullYear();
+            const month = paycheckMonth.getMonth() + 1;
+
 			const data = { data: hTable.getSourceData() };
-			fetch('/api/paycheck/v1/batch-save', {
+			fetch(`/api/paycheck/v1/batch-save/${year}${month >= 10 ? month : '0' + month}`, {
 				method: 'POST',
 				headers: {'content-type': 'application/json'},
 				body: JSON.stringify(data)

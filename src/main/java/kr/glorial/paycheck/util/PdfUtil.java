@@ -121,8 +121,8 @@ public class PdfUtil {
 	 * @param pdfFileName
 	 * @throws Exception
 	 */
-	public static void makePDF(String contents, String cssPath, String fontPath, String pdfFileName) throws Exception {
-		makePDF(contents, cssPath, fontPath, new FileOutputStream(pdfFileName));
+	public static void makePDF(String contents, String cssPath, String fontPath, String pdfFileName, String password) throws Exception {
+		makePDF(contents, cssPath, fontPath, new FileOutputStream(pdfFileName), password);
 	}
 
 	/**
@@ -131,12 +131,10 @@ public class PdfUtil {
 	 * @param contents
 	 * @param cssPath
 	 * @param fontPath
-	 * @param pdfFileName
-	 * @throws DocumentException
+	 * @param os
 	 * @throws IOException
-	 * @throws Exception
 	 */
-	public static void makePDF(String contents, String cssPath, String fontPath, OutputStream os) throws IOException{
+	public static void makePDF(String contents, String cssPath, String fontPath, OutputStream os, String password) throws IOException{
 		Document document = new Document(PageSize.A4, 36, 36, 36, 10);
 		try {
 			FontFactory.register(fontPath);
@@ -145,7 +143,15 @@ public class PdfUtil {
 			style.addStyle("body", "face", "NanumGothic");
 			style.addStyle("body", "encoding", BaseFont.IDENTITY_H);
 
-			PdfWriter.getInstance(document, os);
+			PdfWriter writer = PdfWriter.getInstance(document, os);
+
+			if (password != null) {
+				writer.setEncryption(password.getBytes(),
+						password.getBytes(),
+						PdfWriter.ALLOW_PRINTING,
+						PdfWriter.ENCRYPTION_AES_128);
+			}
+
 			document.open();
 
 			HtmlParser parser = new HtmlParser(document);

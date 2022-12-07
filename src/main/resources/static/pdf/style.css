@@ -7,30 +7,58 @@
 .titlecontent {
    	size : 30pt;
    	padding : 10px;
-   	align : center;
+   	text-align : center;
+	font-weight: bold;
 }
 
 .subtitlecontent {
-   	size : 10pt;
-   	align : center;
-}
-
-.maincontent {
-   	size : 10pt;
-   	padding : 8px 1px 8px 1px;
+	size : 15pt;
+	text-align : left;
+	padding : 10px;
+	font-weight: bold;
 }
 
 .datecontent {
-   	size : 10pt;
-   	align : center;
+	size : 15pt;
+	text-align : center;
+	text-decoration: underline;
 }
 
-.companycontent {
-   	size : 10pt;
-   	padding : 5px 0px 5px 0px;
+.payheader {
+	size : 10pt;
+	border : 1;
+	padding : 10px;
 }
 
-.itemcontent {
-   	size : 10pt;
-   	padding : 8px 1px 8px 1px;
+.payheader td {
+	text-align : right;
+}
+
+.payitem {
+	size : 10pt;
+	border : 1;
+	padding : 10px;
+	text-align : center;
+}
+
+.payitemamt {
+	text-align : right;
+}
+
+.footercontent1 {
+	size : 15pt;
+	padding : 10px;
+	text-align: center;
+	font-weight: bold;
+}
+.footercontent2 {
+	size : 11pt;
+	padding : 10px;
+	text-align: center;
+}
+.footercontent3 {
+	size : 16pt;
+	padding : 10px;
+	text-align: center;
+	font-weight: bold;
 }

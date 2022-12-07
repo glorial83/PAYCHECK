@@ -1,6 +1,10 @@
 package kr.glorial.paycheck.entity;
 
 import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.util.Locale;
+import java.util.Map;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -31,11 +36,13 @@ public class Paycheck {
 	private Long paycheckId;
 	private String paycheckMonth;
 	private String companyName;
+	private String userNo;
 	private String userName;
 	private String userEmail;
 	private String birthDay;
 	private String enterYmd;
 	private String positionName;
+	private String retireYmd;
 
 	//지급액
 	private BigDecimal basicAmount;
@@ -46,6 +53,7 @@ public class Paycheck {
 	private BigDecimal vehicleAmount;
 	private BigDecimal educationAmount;
 	private BigDecimal mealAmount;
+	private BigDecimal childAmount;
 	private BigDecimal payTotalAmount;
 
 	//공제
@@ -58,6 +66,10 @@ public class Paycheck {
 	private BigDecimal supportPensionAmount;
 	private BigDecimal supportHireAmount;
 	private BigDecimal deductionTotalAmount;
+
+	//연말정산
+	private BigDecimal yearEndIncomeTaxAmount;
+	private BigDecimal yearEndLocalTaxAmount;
 
 	//실수령액
 	private BigDecimal realAmount;
@@ -73,6 +85,7 @@ public class Paycheck {
 		this.vehicleAmount        = this.vehicleAmount         == null ? new BigDecimal(0) : this.vehicleAmount;
 		this.educationAmount      = this.educationAmount       == null ? new BigDecimal(0) : this.educationAmount;
 		this.mealAmount           = this.mealAmount            == null ? new BigDecimal(0) : this.mealAmount;
+		this.childAmount          = this.childAmount           == null ? new BigDecimal(0) : this.childAmount;
 		this.payTotalAmount       = this.payTotalAmount        == null ? new BigDecimal(0) : this.payTotalAmount;
 		this.pensionAmount        = this.pensionAmount         == null ? new BigDecimal(0) : this.pensionAmount;
 		this.healthAmount         = this.healthAmount          == null ? new BigDecimal(0) : this.healthAmount;
@@ -83,5 +96,25 @@ public class Paycheck {
 		this.supportPensionAmount = this.supportPensionAmount  == null ? new BigDecimal(0) : this.supportPensionAmount;
 		this.supportHireAmount    = this.supportHireAmount     == null ? new BigDecimal(0) : this.supportHireAmount;
 		this.deductionTotalAmount = this.deductionTotalAmount  == null ? new BigDecimal(0) : this.deductionTotalAmount;
+		this.yearEndIncomeTaxAmount = this.yearEndIncomeTaxAmount  == null ? new BigDecimal(0) : this.yearEndIncomeTaxAmount;
+		this.yearEndLocalTaxAmount = this.yearEndLocalTaxAmount  == null ? new BigDecimal(0) : this.yearEndLocalTaxAmount;
+	}
+
+	public Map toMap() {
+		DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locale.getDefault());
+		ObjectMapper mapper = new ObjectMapper();
+		Map<String, Object> info = mapper.convertValue(this, Map.class);
+
+		for (String key : info.keySet()) {
+			Object val = info.get(key);
+			if (val instanceof BigDecimal) {
+				info.put(key, df.format(val));
+			}
+		}
+
+		String paycheckMonth = (String)info.get("paycheckMonth");
+		info.put("paycheckMonth", paycheckMonth.substring(0, 4) + "-" + paycheckMonth.substring(4));
+
+		return info;
 	}
 }

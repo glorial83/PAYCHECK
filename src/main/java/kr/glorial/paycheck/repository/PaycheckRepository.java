@@ -10,4 +10,6 @@ import kr.glorial.paycheck.entity.Paycheck;
 @Repository
 public interface PaycheckRepository extends JpaRepository<Paycheck, Long>{
 	List<Paycheck> findByPaycheckMonth(String paycheckMonth);
+
+	void deleteByPaycheckMonth(String paycheckMonth);
 }

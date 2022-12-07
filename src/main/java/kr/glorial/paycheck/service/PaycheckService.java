@@ -1,6 +1,7 @@
 package kr.glorial.paycheck.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.transaction.Transactional;
 
@@ -24,12 +25,23 @@ public class PaycheckService {
 		return repository.findByPaycheckMonth(paycheckMonth);
 	}
 
+	public Optional<Paycheck> paycheck(Long paycheckId){
+		return repository.findById(paycheckId);
+	}
+
+	@Transactional
 	public void save(Paycheck paycheck) {
 		repository.save(paycheck);
 	}
 
+	@Transactional
 	public void saveAll(List<Paycheck> paycheck) {
 		repository.saveAll(paycheck);
+	}
+
+	@Transactional
+	public void deleteByPaycheckMonth(String paycheckMonth) {
+		repository.deleteByPaycheckMonth(paycheckMonth);
 	}
 
 }
