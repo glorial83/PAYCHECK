@@ -1,14 +1,13 @@
 package kr.glorial.paycheck.web.dto;
 
-import java.math.BigDecimal;
-
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.datatype.jsr310.deser.LocalDateTimeDeserializer;
 import kr.glorial.paycheck.entity.Paycheck;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
+
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @Builder
 @Getter
@@ -59,6 +58,12 @@ public class PayCheckDTO {
 	//실수령액
 	private BigDecimal realAmount;
 
+	@JsonDeserialize(using = LocalDateTimeDeserializer.class)
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss.SSS")
+	private LocalDateTime sendDate;
+
+	private String sendYn = "N";
+
 	public static PayCheckDTO toDTO(Paycheck paycheck) {
 		return PayCheckDTO.builder()
 			.paycheckId(paycheck.getPaycheckId())
@@ -92,6 +97,7 @@ public class PayCheckDTO {
 			.yearEndLocalTaxAmount(paycheck.getYearEndLocalTaxAmount())
 			.deductionTotalAmount(paycheck.getDeductionTotalAmount())
 			.realAmount(paycheck.getRealAmount())
+			.sendDate(paycheck.getSendDate())
 			.build();
 	}
 

@@ -3,6 +3,7 @@ package kr.glorial.paycheck.entity;
 import java.math.BigDecimal;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.time.LocalDateTime;
 import java.util.Locale;
 import java.util.Map;
 
@@ -14,6 +15,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.EqualsAndHashCode;
@@ -74,6 +76,9 @@ public class Paycheck {
 	//실수령액
 	private BigDecimal realAmount;
 
+	//발송일
+	private LocalDateTime sendDate;
+
 	@PrePersist
 	@PreUpdate
 	public void prePersist() {
@@ -103,6 +108,8 @@ public class Paycheck {
 	public Map toMap() {
 		DecimalFormat df = (DecimalFormat) NumberFormat.getNumberInstance(Locale.getDefault());
 		ObjectMapper mapper = new ObjectMapper();
+		mapper.registerModule(new JavaTimeModule());
+
 		Map<String, Object> info = mapper.convertValue(this, Map.class);
 
 		for (String key : info.keySet()) {
