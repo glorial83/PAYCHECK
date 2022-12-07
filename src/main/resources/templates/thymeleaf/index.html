@@ -73,7 +73,7 @@
         <div id="content-wrapper" class="d-flex flex-column">
             <div class="preloader invisible">
                 <div class="progress" style="width:400px">
-                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%"></div>
+                    <div class="progress-bar progress-bar-striped progress-bar-animated" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0"></div>
                 </div>
             </div>
 
@@ -342,8 +342,6 @@ https://github.com/fengyuanchen/datepicker#i18n
                                   Handsontable.renderers.TextRenderer.apply(this, arguments);
                                   td.innerHTML = `<div data-paycheckName='${value}' onclick='preview(${row})'><u>${value}</u></button>`;
 
-                                  console.log('td.className', td.className);
-
                                   const sendYn = hTable.getDataAtRowProp(row, "sendYn");
                                   if (sendYn === 'Y') {
                                       td.style.background = '#ffff00';
@@ -451,9 +449,9 @@ https://github.com/fengyuanchen/datepicker#i18n
 				language: 'ko-KR',
 				autoHide: true
 			}).on({'hide.datepicker': function (e) {
-				var oldValue = $(this).data('oldValue') || "";
+                    const oldValue = $(this).data('oldValue') || "";
 
-				// 값이 변경 되었을 경우만 조회
+                    // 값이 변경 되었을 경우만 조회
 				if (this.value !== oldValue) {
 		            $(this).data('oldValue', this.value);
 		            getPaychecks();
@@ -507,10 +505,11 @@ https://github.com/fengyuanchen/datepicker#i18n
                 event.preventDefault();
 
                 const totalCount = hTable.countRows();
-                $('.progress-bar-animated').attr('aria-valuemax', totalCount);
-                $('.progress-bar-animated').attr('aria-valuenow', 0);
-                $('.progress-bar-animated').css('width', '0%');
-                $('.progress-bar-animated').html(`0/${totalCount}`);
+                const progressBar = $('.progress-bar-animated');
+                progressBar.attr('aria-valuemax', totalCount);
+                progressBar.attr('aria-valuenow', 0);
+                progressBar.css('width', '0%');
+                progressBar.html(`0/${totalCount}`);
                 $('.preloader').toggleClass('invisible');
 
                 send();
@@ -523,21 +522,22 @@ https://github.com/fengyuanchen/datepicker#i18n
 
                     await fetch(`/api/paycheck/v1/email/${data.paycheckMonth}/${data.paycheckId}`)
                     .then(res => {
-                        const valuemax = parseInt($('.progress-bar-animated').attr('aria-valuemax'));
-                        const valuenow = parseInt($('.progress-bar-animated').attr('aria-valuenow')) + 1;
+                        const progressBar = $('.progress-bar-animated');
+                        const valuemax = parseInt(progressBar.attr('aria-valuemax'));
+                        const valuenow = parseInt(progressBar.attr('aria-valuenow')) + 1;
                         const valuepercent = (valuenow / valuemax) * 100;
 
-                        $('.progress-bar-animated').attr('aria-valuenow', valuenow);
-                        $('.progress-bar-animated').css('width', `${valuepercent}%`);
-                        $('.progress-bar-animated').html(`${valuenow}/${valuemax}`);
+                        progressBar.attr('aria-valuenow', valuenow);
+                        progressBar.css('width', `${valuepercent}%`);
+                        progressBar.html(`${valuenow}/${valuemax}`);
 
-                        if (valuemax == valuenow) $('.preloader').toggleClass('invisible');
+                        if (valuemax === valuenow) $('.preloader').toggleClass('invisible');
 
                         if (res.ok) return res.json();
                         throw new Error('network error');
                     })
                     .then(result => {
-                        if (result.errCode != 0) {
+                        if (result.errCode !== 0) {
                             throw new Error(result.errMessage);
                         } else {
                             hTable.setDataAtRowProp(index, 'sendYn', 'Y');

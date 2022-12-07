@@ -6,14 +6,12 @@ import kr.glorial.paycheck.web.dto.PayCheckDTO;
 import kr.glorial.paycheck.web.dto.RestApiDTO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -28,12 +26,7 @@ public class PaycheckController {
 
     @GetMapping("/email/{paycheckMonth}/{paycheckId}")
     public RestApiDTO sendEmail(@PathVariable String paycheckMonth, @PathVariable Long paycheckId) throws MessagingException, IOException {
-        boolean sendEmailResult = false;
-        try {
-            sendEmailResult = service.sendEmail(paycheckId);
-        } catch (URISyntaxException e) {
-            log.error("EMAIL 전송 오류", e);
-        }
+        boolean sendEmailResult = service.sendEmail(paycheckId);
 
         RestApiDTO result = new RestApiDTO();
         result.setErrCode(-1);
@@ -90,7 +83,7 @@ public class PaycheckController {
             response.setHeader("Content-Disposition", "inline;");
 
             service.createPdf(paycheck.get(), os);
-        } catch (IOException | URISyntaxException e) {
+        } catch (IOException e) {
             log.error("미리보기 오류", e);
         }
     }

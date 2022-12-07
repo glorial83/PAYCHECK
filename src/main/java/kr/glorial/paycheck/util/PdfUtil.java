@@ -8,21 +8,16 @@ import com.lowagie.text.html.HtmlParser;
 import com.lowagie.text.html.StyleSheet;
 import com.lowagie.text.pdf.BaseFont;
 import com.lowagie.text.pdf.PdfWriter;
+import org.springframework.util.StringUtils;
 
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.StringReader;
-import java.net.URI;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class PdfUtil {
 
@@ -30,37 +25,22 @@ public class PdfUtil {
      * HTML을 PDF로 변환
      *
      * @param contents
-     * @param cssPath
-     * @param fontPath
-     * @param pdfFileName
-     * @param password
-     * @throws Exception
-     */
-    public static void makePDF(String contents, String cssPath, String fontPath, String pdfFileName, String password) throws IOException {
-        makePDF(contents, cssPath, fontPath, new FileOutputStream(pdfFileName), password);
-    }
-
-    /**
-     * HTML을 PDF로 변환
-     *
-     * @param contents
-     * @param cssPath
+     * @param cssContents
      * @param fontPath
      * @param os
      * @throws IOException
      */
-    public static void makePDF(String contents, String cssPath, String fontPath, OutputStream os, String password) throws IOException {
+    public static void makePDF(String contents, String cssContents, String fontPath, OutputStream os, String password) throws IOException {
         Document document = new Document(PageSize.A4, 36, 36, 36, 10);
         try {
             FontFactory.register(fontPath);
-            String sTemplateCss = readFile(cssPath);
-            StyleSheet style = new StyleSheet(sTemplateCss);
+
+            StyleSheet style = new StyleSheet(cssContents);
             style.addStyle("body", "face", "NanumGothic");
             style.addStyle("body", "encoding", BaseFont.IDENTITY_H);
 
             PdfWriter writer = PdfWriter.getInstance(document, os);
-
-            if (password != null) {
+            if (StringUtils.hasText(password)) {
                 writer.setEncryption(password.getBytes(),
                         password.getBytes(),
                         PdfWriter.ALLOW_PRINTING,
@@ -74,24 +54,10 @@ public class PdfUtil {
             parser.setStyleSheet(style);
             parser.parse(new StringReader(contents));
         } catch (DocumentException de) {
-            de.printStackTrace();
             throw new IOException(de.getMessage());
         } finally {
             document.close();
         }
-    }
-
-    public static String readFile(String filePath) {
-        try {
-            Stream<String> lines = Files.lines(Paths.get(URI.create(filePath)));
-            String fileContents = lines.collect(Collectors.joining("\n"));
-            lines.close();
-
-            return fileContents;
-        } catch (IOException ignored) {
-        }
-
-        return null;
     }
 
     public static String makeMessage(String message, Map messageParams) {
