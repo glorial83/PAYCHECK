@@ -104,7 +104,6 @@ public class PaycheckService {
 
         helper.setFrom(NOREPLY_ADDRESS);
         helper.setTo(paycheck.getUserEmail());
-        helper.setTo("glorial@take-it.co.kr");
         helper.setSubject(MimeUtility.encodeText(fileName, "UTF-8", "B"));
         helper.setText("안녕하세요\n\n" + fileName + "입니다.\n이번달도 수고 많으셨습니다.\n\n고맙습니다.");
         helper.addAttachment(MimeUtility.encodeText(fileName + ".pdf", "UTF-8", "B"), pdfFile);
